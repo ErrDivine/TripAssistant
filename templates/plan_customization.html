@@ -1,17 +1,19 @@
-{% extends "base.html" %}
-{% block title %}定制行程{% endblock %}
-{% block content %}
-<h2>定制你的专属行程</h2>
-<form method="post">
-    目的地城市：<input type="text" name="city"><br>
-    出发日期：<input type="date" name="start_date"><br>
-    返程日期：<input type="date" name="end_date"><br>
-    预算区间：<input type="text" name="budget"><br>
-    旅游风格：
-    <select name="style">
-        <option value="休闲式">休闲式</option>
-        <option value="特种兵式">特种兵式</option>
-    </select><br>
-    <input type="submit" value="生成攻略">
-</form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}城市旅游全方位规划{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">首页</a> |
+        <a href="{{ url_for('plan_customization') }}">定制行程</a> |
+        <a href="{{ url_for('user_center') }}">用户中心</a> |
+        <a href="{{ url_for('faq') }}">帮助</a> |
+        <a href="{{ url_for('about') }}">关于我们</a>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
