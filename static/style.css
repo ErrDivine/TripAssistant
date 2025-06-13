@@ -1,0 +1,6 @@
+body { font-family: "微软雅黑", Arial, sans-serif; margin: 20px; }
+nav { margin-bottom: 10px; }
+h1, h2 { color: #2d6a4f; }
+a { color: #40916c; text-decoration: none; margin-right: 10px; }
+a:hover { text-decoration: underline; }
+form input, form select { margin: 5px 0; }

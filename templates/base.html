@@ -1,0 +1,20 @@
+AAAA\Desktop\城市旅游全方位规划\TripAssistant\templates\base.html -->
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}城市旅游全方位规划{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">首页</a> |
+        <a href="{{ url_for('plan_customization') }}">定制行程</a> |
+        <a href="{{ url_for('user_center') }}">用户中心</a> |
+        <a href="{{ url_for('faq') }}">帮助</a> |
+        <a href="{{ url_for('about') }}">关于我们</a>
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

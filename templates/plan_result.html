@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}行程攻略{% endblock %}
+{% block content %}
+<h2>你的专属旅游攻略</h2>
+<p>（此处展示自动生成的详细攻略，包括每日行程、交通、美食、酒店等）</p>
+<a href="{{ url_for('ticket_guide') }}">查看交通购票指导</a>
+{% endblock %}
