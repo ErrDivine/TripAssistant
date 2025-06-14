@@ -1,6 +1,582 @@
-body { font-family: "微软雅黑", Arial, sans-serif; margin: 20px; }
-nav { margin-bottom: 10px; }
-h1, h2 { color: #2d6a4f; }
-a { color: #40916c; text-decoration: none; margin-right: 10px; }
-a:hover { text-decoration: underline; }
-form input, form select { margin: 5px 0; }
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    /* 移除 body 上的直接背景样式，交由伪元素处理 */
+    color: #fff;
+    position: relative; /* 为伪元素定位提供基准 */
+    background-color: #111827; /* 最终优化：使用更丰富、优雅的"午夜蓝"作为基色 */
+}
+
+/* 移除旧的、简单的背景层 */
+/* body::before, body::after ... */
+
+/* 新增：最底层的动态"星云"背景 */
+.aurora-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -3; /* 确保在最底层 */
+    overflow: hidden;
+}
+
+.aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    mix-blend-mode: screen; /* 混合模式，让光斑叠加时更好看 */
+    /* 动画基础设置：移除具体时长，使用更平滑的 ease-in-out */
+    animation: move-and-glow infinite alternate ease-in-out;
+}
+
+/* 定义不同光斑的大小、位置和颜色，并大幅延长动画周期 */
+.aurora-blob:nth-child(1) {
+    width: 50vw; height: 50vw;
+    top: -10vh; left: -20vw;
+    background: radial-gradient(circle, #3a86ff, transparent 60%);
+    animation-duration: 10s; /* 极限提速！ */
+}
+
+.aurora-blob:nth-child(2) {
+    width: 45vw; height: 45vw;
+    bottom: -20vh; right: -15vw;
+    background: radial-gradient(circle, #fbc2eb, transparent 60%);
+    animation-duration: 12s; /* 极限提速！ */
+    animation-delay: -8s;
+}
+
+.aurora-blob:nth-child(3) {
+    width: 40vw; height: 40vw;
+    bottom: 30vh; left: -10vw;
+    background: radial-gradient(circle, #ffbe0b, transparent 60%);
+    animation-duration: 9s; /* 极限提速！ */
+    animation-delay: -15s;
+}
+
+.aurora-blob:nth-child(4) {
+    width: 35vw; height: 35vw;
+    top: 10vh; right: 10vw;
+    background: radial-gradient(circle, #a1c4fd, transparent 60%);
+    animation-duration: 8s; /* 极限提速！ */
+    animation-delay: -3s;
+}
+
+/* 定义光斑的动画：更广阔的移动范围，更舒缓的动态 */
+@keyframes move-and-glow {
+    from {
+        /* 重新引入 scale 动画，并扩大移动范围 */
+        transform: translate(-25vw, -25vh) scale(0.9) rotate(0deg);
+        opacity: 0.8;
+    }
+    to {
+        /* 强化 scale 动画，让"呼吸"感更强 */
+        transform: translate(25vw, 25vh) scale(1.3) rotate(360deg);
+        opacity: 1;
+    }
+}
+
+/* 新增：覆盖在星云之上的"玻璃"层，核心是 backdrop-filter */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* 最终升华：将灰色玻璃替换为多彩的、渐变的"虹彩玻璃" */
+    background: linear-gradient(
+        135deg,
+        rgba(20, 30, 80, 0.25),   /* 深邃的蓝色调起点 */
+        rgba(130, 40, 150, 0.2)  /* 华丽的紫色调终点 */
+    );
+    backdrop-filter: blur(60px) saturate(180%); /* 保持模糊和饱和度，让色彩更绚烂 */
+    -webkit-backdrop-filter: blur(60px) saturate(180%);
+    z-index: -2; /* 在星云之上，在光随心动效果之下 */
+}
+
+/* 保留并优化"光随心动"效果，作为最顶层的交互光 */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    /* 最终优化：大幅增强光影的亮度、尺寸和清晰度，使其永远可见 */
+    background-image: radial-gradient(
+        circle at var(--x) var(--y),
+        rgba(255, 255, 255, 0.25) 0%, /* 亮度翻倍 */
+        transparent 35% /* 光晕尺寸增大，边缘更清晰 */
+    );
+    z-index: -1;
+    transition: background 0.15s ease-out; /* 响应更快，更跟手 */
+}
+
+/* 全局头部样式 */
+.global-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* 确保在最顶层 */
+    background: rgba(255, 255, 255, 0.1); /* 半透明背景 */
+    backdrop-filter: blur(15px); /* 玻璃模糊 */
+    -webkit-backdrop-filter: blur(15px); /* Safari兼容 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.main-nav a {
+    color: #ffffff; /* 导航文字颜色 */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.main-nav a:hover {
+    background: rgba(255, 255, 255, 0.15);
+    text-shadow: 0 0 10px rgba(255,255,255,0.6);
+}
+
+.main-content {
+    /* 移除所有flex布局，回归简单块级容器 */
+    display: block;
+    padding-top: 100px; /* 仅为固定头部留出空间 */
+    /* 移除 min-height, padding, text-align */
+}
+
+/* Hero Section 布局 */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* 核心修复: 使用精确的、固定的padding代替所有不稳定的居中方案 */
+    padding: 12vh 2rem 8vh 2rem; 
+}
+
+/* 标题玻璃区域样式 */
+/* 移除原有的 .main-title-glass-area 样式 */
+
+.main-title {
+    font-size: 6rem; /* 确保标题够大 */
+    font-weight: 900; /* 最粗的字重 */
+    color: transparent; /* 文字本身透明 */
+
+    /* 文字的"玻璃材质"填充，极其微妙的透明白色渐变 */
+    background: linear-gradient(
+        45deg, 
+        rgba(255, 255, 255, 0.98) 0%,   /* 核心玻璃亮面起点 */
+        rgba(230, 240, 255, 0.6) 50%,   /* 略带蓝色调的半透明中间色 */
+        rgba(255, 255, 255, 0.98) 100%  /* 核心玻璃亮面终点 */
+    );
+    -webkit-background-clip: text; /* 将背景剪裁为文字形状 */
+    -webkit-text-fill-color: transparent; /* 使文字填充透明，显示剪裁后的背景 */
+
+    /* 彻底移除 filter: blur(), backdrop-filter, box-shadow，确保文字线条的锐利度 */
+
+    /* 关键的 text-shadow，模拟玻璃的线条、反射和光晕 */
+    text-shadow:
+        /* 最锐利的核心高光/线条，模拟玻璃边缘的清晰反光 */
+        0 0 0px rgba(255, 255, 255, 1),      /* 纯白，0模糊，最锐利的核心线条 */
+        0 0 0px rgba(255, 255, 255, 0.9),    /* 再次纯白，0模糊，强化边缘 */
+        1px 1px 0px rgba(255, 255, 255, 0.8), /* 带有偏移的锐利高光 */
+        -1px -1px 0px rgba(255, 255, 255, 0.8), /* 另一侧带有偏移的锐利高光 */
+
+        /* 细微的偏移阴影，模拟光线在玻璃边缘的折射和微弱的厚度感 */
+        0 0 1px rgba(200, 220, 255, 0.3),    /* 极细微蓝色光，模拟折射 */
+        0 0 1px rgba(220, 200, 255, 0.3),    /* 极细微粉色光，模拟折射 */
+        
+        /* 内部柔和的光晕/填充感，模拟光线穿透玻璃主体的效果 */
+        0 0 5px rgba(255, 255, 255, 0.5),    /* 柔和的白色内部光晕，增加透明感 */
+        0 0 10px rgba(200, 220, 255, 0.2),   /* 柔和的蓝色内部光晕 */
+
+        /* 外部柔和的光晕，增加整体的漂浮感，透明度极低 */
+        0 0 20px rgba(255, 255, 255, 0.15),  /* 宽而柔和的白色外部光晕 */
+        0 0 30px rgba(100, 150, 255, 0.08),  /* 宽而柔和的蓝色外部氛围光 */
+        0 0 40px rgba(251, 194, 235, 0.03);  /* 宽而柔和的粉色外部氛围光 */
+
+    line-height: 1.1;
+    letter-spacing: 5px; /* 字间距保持不变，保持大气感 */
+    display: inline-block; /* 确保 text-shadow 效果能够正确渲染 */
+    white-space: nowrap; /* 避免标题意外换行 */
+    transition: all 0.3s ease-in-out;
+}
+
+.main-title:hover {
+    transform: scale(1.02); /* 悬停微放大效果 */
+    /* 悬停时加强光影效果，使其更"闪耀" */
+    text-shadow:
+        0 0 0px rgba(255, 255, 255, 1),
+        0 0 1px rgba(255, 255, 255, 1),
+        0 0 2px rgba(255, 255, 255, 0.98),
+        0 0 4px rgba(255, 255, 255, 0.9),
+        
+        1px 1px 1px rgba(200, 220, 255, 0.35),
+        -1px -1px 1px rgba(220, 200, 255, 0.35),
+        
+        0 0 8px rgba(255, 255, 255, 0.7),
+        0 0 15px rgba(200, 220, 255, 0.3),
+
+        0 0 25px rgba(255, 255, 255, 0.2),
+        0 0 35px rgba(100, 150, 255, 0.1),
+        0 0 45px rgba(251, 194, 235, 0.05);
+}
+
+.main-subtitle {
+    font-size: 2.3rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.98); /* 保持清晰的白色 */
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); /* 柔和阴影 */
+    margin-bottom: 3rem;
+    line-height: 1.4;
+    max-width: 750px;
+    text-align: center;
+}
+
+/* 彻底移除旧的、重复的呼吸动画 */
+/* @keyframes breathing-glow ... is removed */
+
+.main-button {
+    position: relative; /* 为伪元素定位做准备 */
+    overflow: hidden; /* 隐藏伪元素溢出的部分 */
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.8rem; /* 微调字体大小，更显优雅 */
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.12); /* 调整背景透明度 */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    
+    border: 1px solid rgba(255, 255, 255, 0.25); /* 静态时使用更清晰的边框 */
+    
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    
+    /* 最终优化：使用更长、更柔和的 ease-in-out 过渡 */
+    transition: all 0.6s ease-in-out;
+}
+
+/* 创建用于"流光"特效的伪元素 - 这是第一层，较快的光 */
+.main-button::before,
+.main-button::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300%;
+    height: 300%;
+    opacity: 0;
+}
+
+/* 第一层流光：主光效，速度较快 */
+.main-button::before {
+    z-index: -1;
+    background: conic-gradient(
+        from 90deg at 50% 50%,
+        #a1c4fd, #fbc2eb, #ffbe0b, #3a86ff, #a1c4fd
+    );
+    /* 最终优化：动画更慢，过渡更柔和 */
+    transition: opacity 0.8s ease-in-out, 
+                transform 3.5s ease-in-out;
+}
+
+/* 第二层流光：背景氛围光，颜色更柔和，速度更慢，方向相反 */
+.main-button::after {
+    z-index: -2; /* 在第一层光效的后面 */
+    background: conic-gradient(
+        from 180deg at 50% 50%,
+        #ffdde1, #ee9ca7, #a1c4fd, #ffdde1
+    );
+    /* 最终优化：动画再放缓，营造极致的柔和感 */
+    transition: opacity 1s ease-in-out, 
+                transform 5.5s ease-in-out;
+}
+
+.main-button:hover {
+    transform: translateY(-3px) scale(1.03); /* 交互效果更细微、更精致 */
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    /* 最终优化：更柔和、更宽广的阴影 */
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+}
+
+/* 鼠标悬停时，激活第一层流光 */
+.main-button:hover::before {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(360deg);
+}
+
+/* 鼠标悬停时，同时激活第二层流光（反向旋转） */
+.main-button:hover::after {
+    opacity: 0.65; /* 最终优化：透明度再降低，更显微妙 */
+    transform: translate(-50%, -50%) rotate(-360deg);
+}
+
+/* 移除旧的、冲突的 button 样式 */
+
+/* 核心修复：从这个"样式焚化炉"中，拯救出所有不该被销毁的核心元素类。 */
+/* 只保留真正废弃的旧类名，如 .card, .glass-panel 等 */
+.card, .card::before, .glass-panel, .glass-panel::before {
+    all: unset; /* 移除所有属性，避免冲突 */
+    display: contents; /* 避免影响父容器布局 */
+}
+
+/* --- 中央"世界之眼"艺术装置 --- */
+
+.world-lens-container {
+    position: relative; /* 改为相对定位，进入文档流 */
+    margin: 8rem auto; /* 上下留出间距，并水平居中 */
+    width: 400px;
+    height: 400px;
+    z-index: 2;
+    pointer-events: auto; /* 恢复指针事件 */
+}
+
+.world-lens {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    
+    /* 核心：装入全新的"世界"背景图 */
+    background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+
+    /* 完全依靠 box-shadow 构建镜身 */
+    box-shadow: 
+        inset 0 0 60px rgba(0,0,0,0.85),
+        0 0 0 10px #1c1c1c,
+        0 0 0 22px #282828,
+        0 0 0 35px #1c1c1c,
+        0 10px 40px rgba(0,0,0,0.5);
+    
+    overflow: hidden;
+}
+
+/* 核心：移除 backdrop-filter，因为它不再需要 */
+.world-lens::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    
+    /* backdrop-filter: ...; */ /* 已移除 */
+    
+    /* 模拟鱼眼效果的微妙暗角，叠加在背景图之上 */
+    background: radial-gradient(circle at center, transparent 50%, rgba(0,0,0,0.5) 100%);
+    
+    border-radius: 50%;
+    /* 画龙点睛的玻璃边缘高光 */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 2px rgba(255,255,255,0.1);
+}
+
+/* 镜片上的高光/眩光 */
+.lens-glare {
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+    transform: rotate(45deg);
+}
+
+/* 模拟蔡司镀膜的彩色反光 */
+.lens-reflection {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(80, 220, 250, 0.1) 0%, rgba(180, 80, 250, 0.1) 100%);
+    opacity: 0.7;
+}
+
+/* 移除所有旧的、错误的望远镜样式 */
+/* .telescope-wrapper, .telescope, .telescope-tube, .telescope-lens, .telescope-lens-flare, .telescope-stand, .stand-leg 等样式已被删除 */
+
+/* --- 功能介绍星群 --- */
+.features-section {
+    padding: 10rem 2rem;
+    position: relative;
+    z-index: 5;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    /* 继承我们的玻璃质感 */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px) saturate(120%);
+    -webkit-backdrop-filter: blur(20px) saturate(120%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    
+    /* 优雅入场动画 */
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* 错落的动画效果 */
+.feature-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.feature-card:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-icon svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1.5rem;
+    color: #a1c4fd; /* 使用主题色 */
+    filter: drop-shadow(0 0 8px rgba(161, 196, 253, 0.5));
+}
+
+.feature-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.feature-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- 功能画卷 (琉璃宫殿版) --- */
+
+.feature-showcase {
+    width: 100%;
+    position: relative;
+    z-index: 5;
+    padding: 10rem 0; /* 上下留出呼吸空间 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12rem; /* 板块间的巨大间距 */
+}
+
+.feature-panel {
+    width: 80%; /* 限制最大宽度，更显精致 */
+    max-width: 1100px;
+    min-height: 550px; /* 使用 min-height 以适应内容 */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    /* 核心：极致的玻璃质感 - 移除统一背景 */
+    backdrop-filter: blur(25px) saturate(150%); /* 增强饱和度 */
+    -webkit-backdrop-filter: blur(25px) saturate(150%);
+    border-radius: 30px;
+    
+    /* 复杂的、多层的边框和阴影，营造立体感和高级感 */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* 边框更亮 */
+    box-shadow: 
+        inset 0 0 2px 1px rgba(255,255,255,0.2), /* 内部高光边缘更强 */
+        0 20px 60px rgba(0, 0, 0, 0.4); /* 悬浮阴影更深 */
+    
+    /* 滚动感知动画的初始状态 */
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+    transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1),
+                opacity 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    
+    /* 核心修复：应用统一的、中性的玻璃背景，取代所有彩色方案 */
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 核心修复：添加缺失的 .is-visible 状态，让面板在进入视口时能够显示出来 */
+.feature-panel.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* --- 多巴胺色彩注入 --- */
+/* 为每个面板注入独特的、高饱和度的渐变背景 */
+/* 根据您的要求，彻底删除所有多巴胺配色方案 */
+
+.feature-content {
+    max-width: 750px;
+    padding: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.feature-icon svg {
+    width: 64px; /* 图标更大 */
+    height: 64px;
+    margin-bottom: 2.5rem; /* 间距拉开 */
+    color: #fff; /* 直接用白色，靠光晕着色 */
+    /* 霓虹光晕 */
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1),
+                filter 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* 为不同面板的图标赋予不同的霓虹色 */
+.feature-panel:nth-child(1).is-visible .feature-icon svg {
+    filter: drop-shadow(0 0 25px rgba(50, 200, 250, 0.9));
+}
+.feature-panel:nth-child(2).is-visible .feature-icon svg {
+    filter: drop-shadow(0 0 25px rgba(250, 80, 180, 0.9));
+}
+.feature-panel:nth-child(3).is-visible .feature-icon svg {
+    filter: drop-shadow(0 0 25px rgba(180, 100, 250, 0.9));
+}
+
+.feature-panel.is-visible .feature-icon svg {
+    transform: rotate(360deg) scale(1.1); /* 动画更强烈 */
+}
+
+.feature-title {
+    font-size: 3.5rem; /* 标题更大 */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-shadow: 0 3px 15px rgba(0,0,0,0.4);
+}
+
+.feature-description {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.85);
+}

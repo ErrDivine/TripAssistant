@@ -1,7 +1,54 @@
 {% extends "base.html" %}
-{% block title %}首页 - 城市旅游全方位规划{% endblock %}
+{% block title %}首页{% endblock %}
 {% block content %}
-<h1>城市旅游全方位规划</h1>
-<p>一站式定制你的专属旅游攻略！</p>
-<a href="{{ url_for('plan_customization') }}">立即定制行程</a>
+<div class="hero-section text-center">
+    <h1 class="main-title mb-4">Designer旅游助手为您服务</h1>
+    <p class="main-subtitle mb-4">一站式旅游攻略、定制、票务、问答平台</p>
+    <a href="{{ url_for('plan_customization') }}" class="main-button btn btn-lg btn-primary">定制我的旅行计划</a>
+</div>
+
+<!-- 恢复“世界之眼”进行测试 -->
+<div class="world-lens-container">
+    <div class="world-lens">
+        <div class="lens-glare"></div>
+        <div class="lens-reflection"></div>
+    </div>
+</div>
+
+<section class="feature-showcase">
+
+    <!-- 板块1: 智能规划 -->
+    <div class="feature-panel">
+        <div class="feature-content">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+            </div>
+            <h2 class="feature-title">全方位智能规划</h2>
+            <p class="feature-description">不止是机票酒店。我们将为您发掘必吃的网红餐厅与百年老店，规划著名景点的最佳拍照机位，甚至推荐当地人私藏的特色纪念品。整个城市，都是为您定制的数据库。</p>
+        </div>
+    </div>
+
+    <!-- 板块2: 深度定制 -->
+    <div class="feature-panel">
+        <div class="feature-content">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sliders"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+            </div>
+            <h2 class="feature-title">个性化深度定制</h2>
+            <p class="feature-description">无论是预算有限、追求极致效率的"大学生特种兵"，还是预算充裕、只求放松身心的"家庭休闲游"，只需告诉我们您的期望，AI即可为您量身打造独一无二的灵魂旅程。</p>
+        </div>
+    </div>
+
+    <!-- 板块3: 路线优化 -->
+    <div class="feature-panel">
+        <div class="feature-content">
+            <div class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-merge"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 0 1 9 9"></path></svg>
+            </div>
+            <h2 class="feature-title">极致路线优化</h2>
+            <p class="feature-description">告别路线规划的烦恼！超强算法将所有目的地串联成黄金路线，精准计算地铁、公交、打车的实时耗时与花费，甚至考虑到地铁末班车时间，确保您的每一次换乘都无缝衔接。</p>
+        </div>
+    </div>
+
+</section>
 {% endblock %}

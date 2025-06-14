@@ -3,18 +3,58 @@ AAAA\Desktop\城市旅游全方位规划\TripAssistant\templates\base.html -->
 <html lang="zh-cn">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}城市旅游全方位规划{% endblock %}</title>
+    <title>{% block title %}旅游助手{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav>
-        <a href="{{ url_for('index') }}">首页</a> |
-        <a href="{{ url_for('plan_customization') }}">定制行程</a> |
-        <a href="{{ url_for('user_center') }}">用户中心</a> |
-        <a href="{{ url_for('faq') }}">帮助</a> |
-        <a href="{{ url_for('about') }}">关于我们</a>
-    </nav>
-    <hr>
-    {% block content %}{% endblock %}
+    
+    <!-- 新增：动态星云背景层 -->
+    <div class="aurora-bg">
+        <div class="aurora-blob"></div>
+        <div class="aurora-blob"></div>
+        <div class="aurora-blob"></div>
+        <div class="aurora-blob"></div>
+    </div>
+
+    <header class="global-header">
+        <nav class="main-nav">
+            <a href="{{ url_for('index') }}">首页</a> |
+            <a href="{{ url_for('plan_customization') }}">定制行程</a> |
+            <a href="{{ url_for('user_center') }}">用户中心</a> |
+            <a href="{{ url_for('faq') }}">帮助</a> |
+            <a href="{{ url_for('about') }}">关于我们</a>
+        </nav>
+    </header>
+    <div class="main-content" style="z-index: 3;">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+    // 新增：光随心动效果脚本
+    document.addEventListener('pointermove', (e) => {
+        document.body.style.setProperty('--x', e.clientX + 'px');
+        document.body.style.setProperty('--y', e.clientY + 'px');
+    });
+
+    // 新增：滚动感知动画脚本
+    document.addEventListener('DOMContentLoaded', () => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, {
+            threshold: 0.1 // 元素进入视野10%时触发
+        });
+
+        const targets = document.querySelectorAll('.feature-panel');
+        targets.forEach(target => {
+            observer.observe(target);
+        });
+    });
+    </script>
 </body>
 </html>
