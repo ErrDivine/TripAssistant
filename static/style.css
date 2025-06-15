@@ -248,95 +248,98 @@ body::after {
     text-align: center;
 }
 
-/* 彻底移除旧的、重复的呼吸动画 */
-/* @keyframes breathing-glow ... is removed */
-
-.main-button {
-    position: relative; /* 为伪元素定位做准备 */
-    overflow: hidden; /* 隐藏伪元素溢出的部分 */
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.8rem; /* 微调字体大小，更显优雅 */
-    padding: 1rem 3rem;
-    border-radius: 50px;
-    background: rgba(255, 255, 255, 0.12); /* 调整背景透明度 */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    
-    border: 1px solid rgba(255, 255, 255, 0.25); /* 静态时使用更清晰的边框 */
-    
-    color: rgba(255, 255, 255, 0.85);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    
-    /* 最终优化：使用更长、更柔和的 ease-in-out 过渡 */
-    transition: all 0.6s ease-in-out;
+/* 新增：自然光泽动画的 Keyframes */
+@keyframes natural-glint {
+    0% {
+        transform: translateX(-150%) skewX(-30deg);
+    }
+    100% {
+        transform: translateX(150%) skewX(-30deg);
+    }
 }
 
-/* 创建用于"流光"特效的伪元素 - 这是第一层，较快的光 */
+/* 最终版：透明玻璃 + 深色文字 + 您指定的彩色旋转动画 */
+.main-button {
+    position: relative;
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    /* 核心：文字改为深色 */
+    color: rgba(30, 30, 30, 0.9);
+    text-shadow: none;
+    text-decoration: none;
+    border-radius: 50px;
+    z-index: 1;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    /* 核心：完全透明的背景 + 强烈的扭曲效果 */
+    background: transparent;
+    backdrop-filter: blur(20px) saturate(130%);
+    -webkit-backdrop-filter: blur(20px) saturate(130%);
+
+    /* 边框和阴影，勾勒透明玻璃的轮廓 */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* 恢复并保留您喜欢的彩色流光动画 */
 .main-button::before,
 .main-button::after {
     content: '';
     position: absolute;
-    z-index: -1;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     width: 300%;
     height: 300%;
+    transform: translate(-50%, -50%);
     opacity: 0;
 }
 
-/* 第一层流光：主光效，速度较快 */
+/* 第一层流光 */
 .main-button::before {
     z-index: -1;
     background: conic-gradient(
         from 90deg at 50% 50%,
         #a1c4fd, #fbc2eb, #ffbe0b, #3a86ff, #a1c4fd
     );
-    /* 最终优化：动画更慢，过渡更柔和 */
-    transition: opacity 0.8s ease-in-out, 
-                transform 3.5s ease-in-out;
+    transition: opacity 0.8s ease-in-out, transform 3.5s ease-in-out;
 }
 
-/* 第二层流光：背景氛围光，颜色更柔和，速度更慢，方向相反 */
+/* 第二层流光 */
 .main-button::after {
-    z-index: -2; /* 在第一层光效的后面 */
+    z-index: -2;
     background: conic-gradient(
         from 180deg at 50% 50%,
         #ffdde1, #ee9ca7, #a1c4fd, #ffdde1
     );
-    /* 最终优化：动画再放缓，营造极致的柔和感 */
-    transition: opacity 1s ease-in-out, 
-                transform 5.5s ease-in-out;
+    transition: opacity 1s ease-in-out, transform 5.5s ease-in-out;
 }
 
 .main-button:hover {
-    transform: translateY(-3px) scale(1.03); /* 交互效果更细微、更精致 */
-    background: rgba(255, 255, 255, 0.22);
-    color: #ffffff;
-    /* 最终优化：更柔和、更宽广的阴影 */
-    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+    color: #000;
+    transform: translateY(-3px) scale(1.03);
+    /* 悬停时出现微弱的白色高光，增加交互感 */
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
-/* 鼠标悬停时，激活第一层流光 */
+/* 悬停时激活彩色旋转动画 */
 .main-button:hover::before {
     opacity: 1;
     transform: translate(-50%, -50%) rotate(360deg);
 }
 
-/* 鼠标悬停时，同时激活第二层流光（反向旋转） */
 .main-button:hover::after {
-    opacity: 0.65; /* 最终优化：透明度再降低，更显微妙 */
+    opacity: 0.65;
     transform: translate(-50%, -50%) rotate(-360deg);
 }
 
-/* 移除旧的、冲突的 button 样式 */
-
-/* 核心修复：从这个"样式焚化炉"中，拯救出所有不该被销毁的核心元素类。 */
-/* 只保留真正废弃的旧类名，如 .card, .glass-panel 等 */
+/* 卡片和玻璃面板的基础样式 */
 .card, .card::before, .glass-panel, .glass-panel::before {
-    all: unset; /* 移除所有属性，避免冲突 */
-    display: contents; /* 避免影响父容器布局 */
+    border-radius: 1rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
 }
 
 /* --- 中央"世界之眼"艺术装置 --- */

@@ -2,7 +2,7 @@ import requests
 
 
 
-class agent():
+class Agent():
     def __init__(self,messages,url='https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation',key='sk-46f61c60859f4d19a1de714803d10f3e',):
         #chat history for prediction
         self.messages = messages
@@ -89,3 +89,4 @@ class agent():
         # },
 
 
+llm = Agent()
