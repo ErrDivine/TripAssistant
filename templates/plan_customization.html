@@ -1,19 +1,32 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}城市旅游全方位规划{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <nav>
-        <a href="{{ url_for('index') }}">首页</a> |
-        <a href="{{ url_for('plan_customization') }}">定制行程</a> |
-        <a href="{{ url_for('user_center') }}">用户中心</a> |
-        <a href="{{ url_for('faq') }}">帮助</a> |
-        <a href="{{ url_for('about') }}">关于我们</a>
-    </nav>
-    <hr>
-    {% block content %}{% endblock %}
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}定制我的旅行计划{% endblock %}
+
+{% block content %}
+<div class="hero-section text-center" style="padding: 50px 0;">
+    <h1 class="main-title mb-4">定制我的旅行计划</h1>
+    <p class="main-subtitle mb-4">告诉我们您的旅行偏好，AI将为您量身打造专属行程</p>
+</div>
+
+<div class="container mt-5" style="padding-bottom: 5rem;">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="plan-form-container">
+                <h2 class="form-title">请尽情描述您对旅行的构想</h2>
+                <form action="#" method="post">
+                    <div class="mb-4">
+                        <textarea name="travel_plan" class="pulsing-textarea" placeholder="例如：
+- 我想去一个有雪山和湖泊的城市，比如瑞士的因特拉肯
+- 预算大约在8000元，玩5天
+- 我喜欢自然风光，也想逛逛当地的特色小店
+- 我是摄影爱好者，希望能推荐一些绝美的拍照地点
+- ..."></textarea>
+                    </div>
+                    <div class="submit-button-container">
+                        <button type="submit" class="form-submit-btn">生成专属旅行计划</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
