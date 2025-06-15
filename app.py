@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
+# 配置数据库连接
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:jfbkn681@localhost:5432/postgres'
+
 @app.route('/')
 def index():
     return render_template('index.html')
