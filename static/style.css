@@ -714,3 +714,340 @@ body::after {
         transform: rotate(360deg);
     }
 }
+
+/* --- Plan Result Page --- */
+.result-container {
+    background: rgba(15, 25, 55, 0.45);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    backdrop-filter: blur(20px) saturate(170%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    padding: 2.5rem 3rem;
+    margin-top: -2rem;
+}
+
+.result-content {
+    color: #e5e7eb;
+    line-height: 1.8;
+}
+
+.result-content h1,
+.result-content h2,
+.result-content h3 {
+    color: #ffffff;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.result-content h1 { font-size: 2.2rem; }
+.result-content h2 { font-size: 1.8rem; }
+.result-content h3 { font-size: 1.5rem; }
+
+.result-content p {
+    margin-bottom: 1rem;
+}
+
+.result-content ul,
+.result-content ol {
+    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.result-content li {
+    margin-bottom: 0.75rem;
+}
+
+.result-content strong {
+    color: #a1c4fd;
+}
+
+.result-content em {
+    color: #fbc2eb;
+}
+
+.result-content a {
+    color: #8be9fd;
+    text-decoration: none;
+    border-bottom: 1px dotted #8be9fd;
+    transition: color 0.3s ease;
+}
+
+.result-content a:hover {
+    color: #50fa7b;
+}
+
+.result-content pre {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.result-content code {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    padding: 0.2rem 0.4rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.result-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+.day-panel {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Staggered animation for sequential panels */
+.day-panel:nth-child(1) { animation-delay: 0.2s; }
+.day-panel:nth-child(2) { animation-delay: 0.4s; }
+.day-panel:nth-child(3) { animation-delay: 0.6s; }
+.day-panel:nth-child(4) { animation-delay: 0.8s; }
+.day-panel:nth-child(5) { animation-delay: 1.0s; }
+/* Add more if needed */
+
+/* --- Mermaid Mind Map Customization --- */
+#plan-result-display .mermaid {
+    background: rgba(10, 15, 30, 0.5);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#plan-result-display .mermaid svg {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+}
+
+/* Style for the mind map nodes */
+#plan-result-display .mermaid .node rect,
+#plan-result-display .mermaid .node circle,
+#plan-result-display .mermaid .node polygon {
+    fill: #202b4e !important;
+    stroke: #a1c4fd !important;
+    stroke-width: 2px !important;
+}
+
+/* Style for the mind map text */
+#plan-result-display .mermaid .node .label {
+    font-family: 'KaiXinSong', sans-serif !important;
+    color: #ffffff !important;
+}
+
+#plan-result-display .mermaid .edge-label {
+    color: #f0f0f0 !important;
+    font-family: 'KaiXinSong', sans-serif !important;
+}
+
+/* --- Interactive Accordion Styling (V2 - Mind Map Style) --- */
+.plan-accordion {
+    position: relative;
+    padding-left: 30px; /* Space for the main vertical line */
+}
+
+/* The main vertical "trunk" of the mind map */
+.plan-accordion::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 1rem;
+    bottom: 1rem;
+    width: 3px;
+    background: rgba(161, 196, 253, 0.4);
+    border-radius: 2px;
+}
+
+.accordion-item {
+    background: rgba(26, 37, 71, 0.6); /* Slightly more opaque */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: background 0.3s ease;
+    position: relative;
+    margin-bottom: 1.5rem; /* Increased spacing */
+}
+
+/* Horizontal line connecting the trunk to the item */
+.accordion-item::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 2rem;
+    width: 20px;
+    height: 3px;
+    background: rgba(161, 196, 253, 0.6);
+}
+
+.accordion-item:hover {
+    background: rgba(35, 48, 85, 0.8);
+}
+
+.accordion-header {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    padding: 1.5rem 2rem; /* Increased padding */
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.accordion-header h3 {
+    margin: 0;
+    font-size: 1.8rem; /* Larger font size */
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.accordion-header::after {
+    content: '▼';
+    font-size: 1.2rem; /* Larger icon */
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+    color: rgba(255,255,255,0.8);
+}
+
+.accordion-item.active .accordion-header::after {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s cubic-bezier(0.2, 1, 0.3, 1), padding 0.6s ease;
+    padding: 0 2rem;
+    color: #e0e5f0; /* Brighter text */
+    font-size: 1.1rem; /* Larger base font */
+    line-height: 1.7;
+}
+
+.accordion-item.active .accordion-content {
+    padding: 0rem 2rem 2rem 2rem; /* Adjusted padding */
+}
+
+.accordion-content h4 {
+    color: #fbc2eb; /* New color for visibility */
+    font-size: 1.4rem; /* Larger */
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid #fbc2eb;
+    padding-left: 1rem;
+}
+
+.accordion-content ul {
+    list-style-type: '✨';
+    padding-left: 2rem;
+}
+
+.accordion-content li {
+    padding-left: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.accordion-content strong {
+    color: #8be9fd;
+    font-weight: 600;
+}
+
+/* --- Animated Content Components --- */
+.accordion-content .plan-step,
+.accordion-content .pro-tip,
+.accordion-content .warning-note,
+.accordion-content .info-bit {
+    opacity: 0;
+    transform: translateX(-20px);
+    margin-bottom: 0.8rem;
+    padding: 0.5rem 1rem;
+    border-left: 3px solid transparent;
+    border-radius: 5px;
+    transition: all 0.4s ease-out;
+}
+
+.accordion-item.active .plan-step,
+.accordion-item.active .pro-tip,
+.accordion-item.active .warning-note,
+.accordion-item.active .info-bit {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Individual Component Styling */
+.plan-step {
+    border-left-color: #7c78b8;
+    background: rgba(255,255,255,0.02);
+}
+
+.pro-tip {
+    border-left-color: #ffbe0b;
+    background: rgba(255, 190, 11, 0.08);
+    animation: glow-pulse 2s infinite alternate;
+}
+
+.warning-note {
+    border-left-color: #fb5607;
+    background: rgba(251, 86, 7, 0.1);
+    animation: gentle-shake 0.5s 1;
+}
+
+.info-bit {
+    border-left-color: #83c5be;
+    background: rgba(131, 197, 190, 0.08);
+    font-style: italic;
+}
+
+/* Staggered Animation Delay */
+.accordion-item.active .plan-step:nth-of-type(1),
+.accordion-item.active .pro-tip:nth-of-type(1),
+.accordion-item.active .warning-note:nth-of-type(1),
+.accordion-item.active .info-bit:nth-of-type(1) { animation-delay: 0.2s; }
+
+.accordion-item.active .plan-step:nth-of-type(2),
+.accordion-item.active .pro-tip:nth-of-type(2),
+.accordion-item.active .warning-note:nth-of-type(2),
+.accordion-item.active .info-bit:nth-of-type(2) { animation-delay: 0.3s; }
+
+.accordion-item.active .plan-step:nth-of-type(3),
+.accordion-item.active .pro-tip:nth-of-type(3),
+.accordion-item.active .warning-note:nth-of-type(3),
+.accordion-item.active .info-bit:nth-of-type(3) { animation-delay: 0.4s; }
+
+/* Add more as needed, this pattern can continue */
+.accordion-item.active div:nth-of-type(4) { animation-delay: 0.5s; }
+.accordion-item.active div:nth-of-type(5) { animation-delay: 0.6s; }
+.accordion-item.active div:nth-of-type(6) { animation-delay: 0.7s; }
+.accordion-item.active div:nth-of-type(7) { animation-delay: 0.8s; }
+.accordion-item.active div:nth-of-type(8) { animation-delay: 0.9s; }
+
+
+/* Keyframe Animations */
+@keyframes glow-pulse {
+    from { box-shadow: 0 0 5px -2px rgba(255, 190, 11, 0.3); }
+    to { box-shadow: 0 0 10px 2px rgba(255, 190, 11, 0.1); }
+}
+
+@keyframes gentle-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
