@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}用户中心{% endblock %}
+{% block content %}
+
+<div class="feature-panel mt-5" style="max-width: 600px;">
+    <!-- <div class="user-info-box"> -->
+        <h1 class="feature-title" style="font-size:2.2rem; margin-bottom:2rem;">修改个人信息</h1>
+        <form method="post" action="{{ url_for('change_user_info') }}">
+            <div class="user-info-row" style="margin-bottom:18px;">
+                <label class="user-info-label" for="new_name">名字：</label>
+                <input type="text" id="new_name" name="new_name" value="{{user.username}}" class="user-info-value"
+                    required style="flex:1; margin-left:18px; border-radius:8px; border:1px solid #ccc; padding:6px 12px;">
+            </div>
+            <div class="user-info-row" style="margin-bottom:18px;">
+                <label class="user-info-label" for="new_email">邮箱：</label>
+                <input type="email" id="new_email" name="new_email" value="{{user.email}}" class="user-info-value"
+                    required style="flex:1; margin-left:18px; border-radius:8px; border:1px solid #ccc; padding:6px 12px;">
+            </div>
+            <div class="user-info-row" style="margin-bottom:28px;">
+                <label class="user-info-label" for="new_phone">手机号：</label>
+                <input type="text" id="new_phone" name="new_phone" value="{{user.phone}}" class="user-info-value"
+                    required style="flex:1; margin-left:18px; border-radius:8px; border:1px solid #ccc; padding:6px 12px;">
+            </div>
+            <div style="text-align:center;">
+                <button type="submit" class="user-info-btn">点击修改</button>
+            </div>
+        </form>
+    <!-- </div> -->
+</div>
+
+{% endblock %}

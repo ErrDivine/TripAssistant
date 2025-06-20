@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title%}登录{% endblock %}
+{% block content %}
+<div class="feature-panel mb-3 mx-auto" style="max-width: 500px; padding: 48px 36px 36px 36px;">
+    <div class="container text-center px-0">
+        <h2 class="feature-title mb-5" style="font-size:2.8rem; font-weight:bold; letter-spacing:2px; text-shadow: 2px 2px 8px #fff;">用户登录</h2>
+        <form method="post">
+            <div class="mb-4 row align-items-center justify-content-center">
+                <label class="col-3 col-form-label text-end feature-description" style="font-size:1.2rem;">用户名：</label>
+                <div class="col-8">
+                    <input type="text" name="username" class="form-control form-control-lg" required>
+                </div>
+            </div>
+            <div class="mb-4 row align-items-center justify-content-center">
+                <label class="col-3 col-form-label text-end feature-description" style="font-size:1.2rem;">密码：</label>
+                <div class="col-8">
+                    <input type="password" name="password" class="form-control form-control-lg" required>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <button type="submit" class="btn btn-primary btn-lg w-100" style="font-size:1.2rem;">登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

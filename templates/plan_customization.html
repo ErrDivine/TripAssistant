@@ -12,7 +12,7 @@
         <div class="col-lg-8 offset-lg-2">
             <div class="plan-form-container">
                 <h2 class="form-title">请尽情描述您对旅行的构想</h2>
-                <form action="#" method="post">
+                <form id="plan-form" action="#" method="post">
                     <div class="mb-4">
                         <textarea name="travel_plan" class="pulsing-textarea" placeholder="例如：
 - 我想去一个有雪山和湖泊的城市，比如瑞士的因特拉肯
@@ -22,11 +22,25 @@
 - ..."></textarea>
                     </div>
                     <div class="submit-button-container">
-                        <button type="submit" class="form-submit-btn">生成专属旅行计划</button>
+                        <button type="submit" class="form-submit-btn" id="submit-btn">生成专属旅行计划</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+
+<!-- 判断是否登录，若还没登录则提示用户登录 -->
+<script>
+    const isLoggedIn = {{ is_logged_in|tojson | safe }};
+    document.getElementById('plan-form').addEventListener('submit', function(e) {
+        if (!isLoggedIn) {
+            e.preventDefault();
+            if (confirm('请先登录后再生成专属旅行计划，是否前往登录？')) {
+                window.location.href = "{{ url_for('login') }}";
+            }
+        }
+    });
+</script>
 {% endblock %}

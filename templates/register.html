@@ -1,0 +1,41 @@
+{% extends "base.html"%}
+{% block title %}注册{% endblock %}
+
+{% block content %}
+<div class="feature-panel mt-5 mx-auto" style="max-width: 520px; padding: 48px 36px 36px 36px;">
+    <div class="container px-0">
+        <h2 class="mb-5 text-center" style="font-size:2.4rem; font-weight:bold; letter-spacing:2px; text-shadow: 2px 2px 8px #fff;">用户注册</h2>
+        <form method="post">
+            <div class="mb-4 row align-items-center justify-content-center">
+                <label class="col-3 col-form-label text-end" style="font-size:1.1rem;">用户名：</label>
+                <div class="col-8">
+                    <input type="text" name="username" class="form-control form-control-lg" required>
+                </div>
+            </div>
+            <div class="mb-4 row align-items-center justify-content-center">
+                <label class="col-3 col-form-label text-end" style="font-size:1.1rem;">邮箱：</label>
+                <div class="col-8">
+                    <input type="email" name="email" class="form-control form-control-lg" required>
+                </div>
+            </div>
+            <div class="mb-4 row align-items-center justify-content-center">
+                <label class="col-3 col-form-label text-end" style="font-size:1.1rem;">手机号：</label>
+                <div class="col-8">
+                    <input type="text" name="phone" class="form-control form-control-lg" required>
+                </div>
+            </div>
+            <div class="mb-4 row align-items-center justify-content-center">
+                <label class="col-3 col-form-label text-end" style="font-size:1.1rem;">密码：</label>
+                <div class="col-8">
+                    <input type="password" name="password" class="form-control form-control-lg" required>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <button type="submit" class="btn btn-primary btn-lg w-100" style="font-size:1.1rem;">注册</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

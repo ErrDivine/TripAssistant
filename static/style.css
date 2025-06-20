@@ -369,7 +369,7 @@ body::after {
         0 0 0 10px #1c1c1c,
         0 0 0 22px #282828,
         0 0 0 35px #1c1c1c,
-        0 10px 40px rgba(0,0,0,0.5);
+        0 10px 40px rgba(0, 0, 0, 0.5);
     
     overflow: hidden;
 }
@@ -524,6 +524,8 @@ body::after {
     
     /* 核心修复：应用统一的、中性的玻璃背景，取代所有彩色方案 */
     background: rgba(255, 255, 255, 0.1);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* 核心修复：添加缺失的 .is-visible 状态，让面板在进入视口时能够显示出来 */
@@ -713,4 +715,77 @@ body::after {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.feature-panel {
+    display: block;         /* 让内容自然流式排列 */
+    text-align: left;       /* 文字左对齐 */
+    padding: 40px 40px 40px 40px; /* 四周留白，可根据需要调整 */
+}
+
+.feature-panel ul {
+    display: block;         /* 竖向排列 */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.feature-panel ul li {
+    min-width: 220px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 18px;
+    display: block;
+}
+
+
+.user-info-box {
+    max-width: 420px;
+    margin: 40px auto0 auto;
+    padding: 32px 36px;
+    background:rgba(255,255,255,0.18);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0, 0,0, 0.08);
+    font-size: 1.25rem;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.user-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.18rem;
+}
+
+.user-info-label {
+    font-weight: 600;
+    color: #333;
+    min-width: 90px;
+}
+
+.user-info-value { 
+    color: #444;
+    word-break: break-all;
+}
+
+.user-info-button {
+    padding:8px 22px;
+    font-size: 1.08rem;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(90deg,#a1c4fd 0%,#c2e9fb 100%);
+    color: #222 ;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(161, 196,253,00.15);
+    transition: background 0.2s;
+}
+.user-info-btn:hover {
+    background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%);
+    color: #222;
 }

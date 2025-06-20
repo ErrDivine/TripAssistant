@@ -1,6 +1,88 @@
 {% extends "base.html" %}
 {% block title %}用户中心{% endblock %}
 {% block content %}
-<h2>用户中心</h2>
-<p>我的行程、收藏、个人信息等。</p>
+<h2 class="text-center">用户中心</h2>
+
+    <p class="text-center">我的行程、收藏、个人信息等。</p>
+    <div class="feature-panel ">
+        <h3 class="feature-title mb-4" style="font-weight: bold;">我的行程</h3>
+      <!-- 这里展示用户已定制或保存的所有旅行行程 -->
+
+        {% if trips %}
+        <ul>
+            {% for trip in trips %}
+            <li>
+                <strong>{{ trip.title }}</strong>
+                <span>
+                    ({{ trip.start_date }} - {{ trip.end_date }}, {{ trip.destination }})
+                </span>
+                <a href="{{ url_for('plan_result', trip_id=trip.id) }}">查看详情</a>
+                <a href="{{ url_for('delete_trip', trip_id=trip.id) }}">删除行程</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p class="feature-description">暂无行程，快去<a href="{{url_for("plan_customization")}}">定制行程</a>吧！</p>
+        {% endif %}
+    </div>
+    
+    <br>
+    <br>
+    <div class="feature-panel mb-5">
+        <h3 class="feature-title">我的收藏</h3>
+        <p class="feature-description">这里展示用户收藏的景点、攻略、路线等内容。</p>
+        {% if collections %}
+            <ul>
+            {% for item in collections %}
+                <li>
+                    [{{ item.type }}] {{ item.name }}
+                    <!-- 可加详情页跳转 -->
+                    <a href="{{ url_for('detail', item_type=item.type, item_id=item.id) }}">查看详情</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p class="feature-description">暂无收藏，快去添加吧！</p>
+        {% endif %}
+    </div>
+
+
+    
+    <!-- <h2>个人信息</h2> -->
+    <div class="feature-panel mb-5">
+        <h3 class="feature-title">个人信息</h3>
+        <p class="feature-description">这里展示并可编辑用户的基本信息。</p>
+
+        <div class="user-info-box">
+            <div class="user-info-row">
+                <span class="user-info-label">用户名：</span>
+                <span class="user-info-value">{{ user.username}}</span>
+            </div>
+            <div class="user-info-row">
+                <span class="user-info-label">邮箱：</span>
+                <span class="user-info-value">{{ user.email}}</span>
+            </div>
+             <div class="user-info-row">
+                <span class="user-info-label">手机号：</span>
+                <span class="user-info-value">{{ user.phone}}</span>
+            </div>
+             <div class="user-info-row">
+                <span class="user-info-label">注册时间：</span>
+                <span class="user-info-value">{{ user.created_at.strftime('%Y-%m-%d %H:%M') if user.created_at else ''}}</span>
+            </div>
+            <div class="user-info-row" style="justify-content: flex-start;">
+                <a href="{{ url_for('change_user_info') }}">
+                <button id="changeUser_info" type="button">修改个人信息</button>
+                </a>
+            </div>
+        </div>
+
+
+
+
+
+
+      
+    </div>
+
 {% endblock %}
