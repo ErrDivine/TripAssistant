@@ -4,6 +4,13 @@
 <div class="feature-panel mb-3 mx-auto" style="max-width: 500px; padding: 48px 36px 36px 36px;">
     <div class="container text-center px-0">
         <h2 class="feature-title mb-5" style="font-size:2.8rem; font-weight:bold; letter-spacing:2px; text-shadow: 2px 2px 8px #fff;">用户登录</h2>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-danger" role="alert" style="text-align:center;">
+              {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
         <form method="post">
             <div class="mb-4 row align-items-center justify-content-center">
                 <label class="col-3 col-form-label text-end feature-description" style="font-size:1.2rem;">用户名：</label>

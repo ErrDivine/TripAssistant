@@ -12,7 +12,7 @@
         <div class="col-lg-8 offset-lg-2">
             <div class="plan-form-container">
                 <h2 class="form-title">请尽情描述您对旅行的构想</h2>
-                <form id="plan-form" action="#" method="post">
+                <form id="plan-form" id="plan-form">
                     <div class="mb-4">
                         <textarea name="travel_plan" class="pulsing-textarea" placeholder="例如：
 - 我想去一个有雪山和湖泊的城市，比如瑞士的因特拉肯
@@ -22,9 +22,18 @@
 - ..."></textarea>
                     </div>
                     <div class="submit-button-container">
-                        <button type="submit" class="form-submit-btn" id="submit-btn">生成专属旅行计划</button>
+                        <button type="submit" class="form-submit-btn" id="generate-btn">生成专属旅行计划</button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- New container for displaying the result -->
+    <div class="row mt-5">
+        <div class="col-lg-12" style="padding-bottom: 10rem;">
+            <div id="plan-result-display">
+                <!-- AI-generated HTML will be injected here -->
             </div>
         </div>
     </div>
@@ -33,7 +42,7 @@
 
 <!-- 判断是否登录，若还没登录则提示用户登录 -->
 <script>
-    const isLoggedIn = {{ is_logged_in|tojson | safe }};
+    const isLoggedIn = {{ is_logged_in | default(false) | tojson | safe }};
     document.getElementById('plan-form').addEventListener('submit', function(e) {
         if (!isLoggedIn) {
             e.preventDefault();
@@ -43,4 +52,85 @@
         }
     });
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('plan-form');
+    const displayArea = document.getElementById('plan-result-display');
+    const submitButton = document.getElementById('generate-btn');
+
+    // Function to handle accordion interactivity
+    function setupAccordion() {
+        const accordionItems = displayArea.querySelectorAll('.accordion-item');
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const content = item.querySelector('.accordion-content');
+            
+            if (!item.classList.contains('active')) {
+                content.style.maxHeight = '0px';
+            }
+
+            header.addEventListener('click', () => {
+                item.classList.toggle('active');
+                if (item.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    content.style.maxHeight = '0px';
+                }
+            });
+        });
+    }
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const travelPlan = form.querySelector('textarea[name="travel_plan"]').value;
+        if (!travelPlan.trim()) {
+            displayArea.innerHTML = `<div class="result-container" style="text-align: center; padding: 2rem;"><p>请输入您的旅行想法！</p></div>`;
+            return;
+        }
+
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 正在为您生成...';
+        submitButton.disabled = true;
+        displayArea.innerHTML = `
+            <div class="result-container text-center" style="padding: 4rem;">
+                <div class="spinner-grow text-light" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">AI正在绘制您的旅行蓝图，请稍候...</p>
+            </div>`;
+
+        fetch("{{ url_for('generate_plan') }}", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ travel_plan: travelPlan })
+        })
+        .then(response => response.ok ? response.json() : Promise.reject(response))
+        .then(data => {
+            displayArea.innerHTML = data.html;
+            setupAccordion(); // Make the new content interactive
+        })
+        .catch(async error => {
+            let errorMsg = `HTTP error! Status: ${error.status || 'Network Error'}`;
+            try {
+                const errJson = await error.json();
+                errorMsg = errJson.error || errJson.message || 'Unknown server error';
+            } catch (e) { /* Ignore if response is not JSON */ }
+            
+            console.error('Error fetching travel plan:', error);
+            displayArea.innerHTML = `
+                <div class="result-container text-center text-danger" style="padding: 2rem;">
+                    <h4>生成失败</h4>
+                    <p>抱歉，我们遇到了一些问题。请稍后再试。</p>
+                    <p><em>错误详情: ${errorMsg}</em></p>
+                </div>`;
+        })
+        .finally(() => {
+            submitButton.innerHTML = originalButtonText;
+            submitButton.disabled = false;
+        });
+    });
+});
+</script>
+
 {% endblock %}
