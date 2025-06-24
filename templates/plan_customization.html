@@ -21,6 +21,17 @@
 - 我是摄影爱好者，希望能推荐一些绝美的拍照地点
 - ..."></textarea>
                     </div>
+                    <!-- 新增：出行日期选择 -->
+                    <div class="mb-4 row">
+                        <div class="col">
+                            <label for="start-date" class="form-label">出发日期</label>
+                            <input type="date" id="start-date" name="start_date" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="end-date" class="form-label">返回日期</label>
+                            <input type="date" id="end-date" name="end_date" class="form-control">
+                        </div>
+                    </div>
                     <div class="submit-button-container">
                         <button type="submit" class="form-submit-btn" id="generate-btn">生成专属旅行计划</button>
                     </div>
@@ -83,7 +94,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-        const travelPlan = form.querySelector('textarea[name="travel_plan"]').value;
+        const travelPlanTextarea = form.querySelector('textarea[name="travel_plan"]');
+        let travelPlan = travelPlanTextarea.value;
+        const startDate = form.querySelector('input[name="start_date"]').value;
+        const endDate = form.querySelector('input[name="end_date"]').value;
+
+        // 日期格式化为“6月22号”形式
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const d = new Date(dateStr);
+            return `${d.getMonth() + 1}月${d.getDate()}号`;
+        }
+
+        let dateText = '';
+        if (startDate && endDate) {
+            dateText = `出行时间：${formatDate(startDate)}到${formatDate(endDate)}\n`;
+        } else if (startDate) {
+            dateText = `出行时间：${formatDate(startDate)}\n`;
+        }
+
+        // 如果没有自动添加过，则添加到textarea内容最前面
+        if (dateText && !travelPlan.startsWith(dateText)) {
+            travelPlan = dateText + travelPlan;
+            travelPlanTextarea.value = travelPlan; // 自动写回textarea
+        }
+
         if (!travelPlan.trim()) {
             displayArea.innerHTML = `<div class="result-container" style="text-align: center; padding: 2rem;"><p>请输入您的旅行想法！</p></div>`;
             return;
@@ -103,7 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch("{{ url_for('generate_plan') }}", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ travel_plan: travelPlan })
+            body: JSON.stringify({
+                travel_plan: travelPlan,
+                start_date: startDate,
+                end_date: endDate
+            })
         })
         .then(response => response.ok ? response.json() : Promise.reject(response))
         .then(data => {

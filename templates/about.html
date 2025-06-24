@@ -2,14 +2,134 @@
 {% block title %}关于我们{% endblock %}
 {% block content %}
 
-    <div class="feature-title mb-3 text-center">
-        <h2 class="feature-title mb-4">关于我们</h2>
-        <h2> 我</h2>
-    </div> 
+<style>
+    .container{
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 400px;
+    }
+    .container .card{
+        position: absolute;
+        width: 240px;
+        height: 320px;
+        /* background: #333; */
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.5s;
 
-    <div class=" feature-title mb-0 text-center">
-        团队介绍
-        <h2 class="feature-description mb-3">团队介绍</h2>
+        /* 初始位置居中 */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    /* 悬停展开效果 */
+    .container:hover .card{
+        transform: translate(-50%,-50%)
+        rotate(calc(var(--i)*5deg))
+        translate(calc(var(--i)*120px),-50px);
+    }
+
+    /* 单个卡片悬停效果 */
+    .container:hover .card:hover{
+        transform: translate(-50%,-50%)
+        rotate(calc(var(--i)*5deg))
+        translate(calc(var(--i)*120px),-100px);
+        z-index: 100;
+    }
+
+    .container .card img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+        filter: grayscale(1); /*设置灰度*/
+        transition: all 0.9s ease; /*颜色平滑过渡*/
+    }
+
+    /* 悬停恢复颜色 */
+    .container .card:hover img{
+        filter: grayscale(0);
+    }
+
+
+    /* 底部黑色留白 */
+    .balckfooter{
+        width: 100%;
+        height: 120px;
+        background: #333;
+        opacity: 0.98;
+        margin-top: 60px;
+    }
+</style>
+
+
+
+
+
+<!-- <div class="feature-title mb-4 text-center">关于我们</div> -->
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="feature-panel shadow-lg p-5"
+         style="max-width: 800px; background: rgba(255,255,255,0.45); border-radius: 24px; backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);">
+        <h2 class="feature-title mb-4 text-center" style="font-size:2.6rem; font-weight:bold; letter-spacing:2px; text-shadow: 2px 2px 8px #fff;">关于我们</h2>
+        <div class="feature-description" style="font-size:1.25rem; line-height:2; color:#333;">
+            <p><strong>介绍：</strong></p>
+            <p>
+                随着我们在快节奏的生活中面临的压力和疲惫越来越多，外出旅游缓解压力与疲劳的需求也逐渐增加。
+                当我们外出旅游时，总想着能够最大化地满足我们的需求，本来是为了放松服务的。如果因为攻略的设定和计划而焦虑，反而适得其反；有时还会出现没被发现的问题，反过来带来了烦躁和困扰。
+            </p>
+            <p>
+                首先是信息变更的及时性方面。比如说当我们在小红书上做好了攻略，准备前往某个地方旅游时，到了之后发现当地出现了部分政策的改变，使得本来的计划被打乱。在面对这些临时性的问题时，小红书等APP更多的是人为的总结，但当我们引入人工智能后，可以相较起来更及时更新相关信息。
+            </p>
+            <p>
+                其次是个性化问题。当我们更想了解去往当地的交通方式和时，可能有时因为地点的小概率性，我们没有办法获得更符合自己需求的信息，这往往会造成困扰。
+            </p>
+            <p>
+                还有纯粹性方面，我们去到某些软件时，会带有“广告”的成分，这些往往会干扰我们的判断和选择。
+            </p>
+            <p>
+                所以我们决定开发这个平台，希望可以在这个时代，我们都能更方便地好好享受旅游带来的快乐，而减少因为计划的设想而反过来带来的焦虑。
+            </p>
+            <hr>
+            <p><strong>开发者寄语：</strong></p>
+            <p>
+                希望我们的平台可以给大家带来便利。愿我们能认真地享受旅游带来的快乐，不管是享受美食还是欣赏美景，都不被新型焦虑裹挟，不让本来是为了使自己开心的事情变成了新的烦恼的来源。
+            </p>
+        </div>
     </div>
-<p>团队介绍、联系方式等。</p>
+</div>
+
+
+<br>
+<br>
+<!-- 卡片展示 -->
+<div class="container">
+    <div class="card" style="--i:-3">
+        <img class="card-img" src="https://picsum.photos/248/320?random=1" alt="">
+    </div>
+     <div class="card" style="--i:-2">
+        <img class="card-img" src="https://picsum.photos/248/320?random=2" alt="">
+    </div>
+     <div class="card" style="--i:-1">
+        <img class="card-img" src="https://picsum.photos/248/320?random=3" alt="">
+    </div>
+     <div class="card" style="--i:0">
+        <img class="card-img" src="https://picsum.photos/248/320?random=4" alt="">
+    </div>
+     <div class="card" style="--i:1">
+        <img class="card-img" src="https://picsum.photos/248/320?random=5" alt="">
+    </div>
+     <div class="card" style="--i:2">
+        <img class="card-img" src="https://picsum.photos/248/320?random=6" alt="">
+    </div>
+     <div class="card" style="--i:3">
+        <img class="card-img" src="https://picsum.photos/248/320?random=7" alt="">
+    </div>
+</div>
+
+<!-- 底部留白 -->
+<div class="balckfooter"></div>
 {% endblock %}

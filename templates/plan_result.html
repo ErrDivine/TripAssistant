@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}行程详情{% endblock %}
+{% block content %}
+<div class="feature-panel mb-5" style="max-width:900px;margin:40px auto;">
+    <h2 class="feature-title mb-4">行程详情</h2>
+    {% if trip %}
+        <div class="feature-description">
+            <p><strong>标题：</strong>{{ trip.title }}</p>
+            <p><strong>目的地：</strong>{{ trip.destination }}</p>
+            <p><strong>出发日期：</strong>{{ trip.start_date }}</p>
+            <p><strong>返回日期：</strong>{{ trip.end_date }}</p>
+            <p><strong>创建时间：</strong>{{ trip.created_at }}</p>
+        </div>
+    {% else %}
+        <p>未找到该行程。</p>
+    {% endif %}
+</div>
+{% endblock %}

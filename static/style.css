@@ -137,20 +137,56 @@ body::after {
 }
 
 .main-nav a {
-    color: #ffffff; /* 导航文字颜色 */
+    /* color:rgb(232, 239, 232);  */
+    color: #223366;
     text-decoration: none;
     font-weight: 500;
     font-size: 1.1rem;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     text-shadow: 0 0 5px rgba(0,0,0,0.3);
+    min-width: 120px; /* 新增：统一最小宽度 */
+    text-align: center; /* 让文字居中 */
 }
 
-.main-nav a:hover {
-    background: rgba(255, 255, 255, 0.15);
-    text-shadow: 0 0 10px rgba(255,255,255,0.6);
+/* 新增 */
+.main-nav a::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:rgba(5, 77, 79, 0.3);
+    border-radius: 0.8rem;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s ease;
 }
+.main-nav a:hover::before{
+    /* 水平方向完全展开 */
+    transform: scaleX(1); 
+}
+/* 悬停时的图标动画 */
+.main-nav a i{
+    transition: transform 0.4s ease;
+}
+.main-nav a:hover i {
+    transform: translateY(-3px);
+}
+.main-nav a:hover {
+    text-shadow:  0 0 10px rgba(255, 255, 255, 0.8);
+    color: #fff;
+}
+/* 导航不同的颜色 */
+.main-nav a:nth-child(1)::before { background: linear-gradient(90deg, rgba(0, 150, 136, 0.2), rgba(0, 150, 136, 0.7)); }
+.main-nav a:nth-child(2)::before { background: linear-gradient(90deg, rgba(48, 63, 159, 0.2), rgba(48, 63, 159, 0.7)); }
+.main-nav a:nth-child(3)::before { background: linear-gradient(90deg, rgba(183, 28, 28, 0.2), rgba(183, 28, 28, 0.7)); }
+.main-nav a:nth-child(4)::before { background: linear-gradient(90deg, rgba(136, 14, 79, 0.2), rgba(136, 14, 79, 0.7)); }
+.main-nav a:nth-child(5)::before { background: linear-gradient(90deg, rgba(74, 20, 140, 0.2), rgba(74, 20, 140, 0.7)); }
+
 
 .main-content {
     /* 移除所有flex布局，回归简单块级容器 */
